@@ -1,7 +1,0 @@
-pyTelegramBotAPI==3.7.6
-pytz==2021.1
-requests==2.25.1
-typing-extensions==3.7.4.3
-ujson==4.0.2
-urllib3==1.26.3
-yarl==1.6.3
