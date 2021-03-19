@@ -1,2 +1,3 @@
-venv
-.idea
+ .env.dist
+ __pycache__
+ data/__pycache__/

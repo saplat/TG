@@ -1,1 +1,11 @@
-TOKEN = "1637189051:AAFTokX7so4idPPLN_ighkNSvfP85y0cLoI"
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+BOT_TOKEN = str(os.getenv("BOT_TOKEN"))
+
+admins = [
+    1362443966
+]
+
+ip = os.getenv("ip")
