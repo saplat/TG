@@ -4,4 +4,4 @@ from aiogram.dispatcher.filters import Text
 
 @dp.message_handler(Text('Преподаватель'))
 async def student(message):
-    await message.answer('Привет джедай')
+    await message.answer('Привет джедай \n укажи своё ФИ')
