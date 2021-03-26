@@ -1,8 +1,11 @@
 from aiogram.dispatcher.filters import Text
 from keyboard.inlinegroup import group
 from loader import dp
+from aiogram import types
 
 
 @dp.message_handler(Text('Студент'))
 async def student(message):
-    await message.answer('Привет падаван \n какая у тебя группа?', reply_markup= group)
+    a = types.ReplyKeyboardRemove()
+    await message.answer('Привет падаван', reply_markup=a)
+    await message.answer('Какая у тебя группа?', reply_markup= group)

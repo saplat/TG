@@ -1,5 +1,12 @@
-from loader import dp,bot
+import asyncpg
+
+from keyboard.gomenu import menu_go
+from loader import dp,bot,db
 
 @dp.callback_query_handler()
 async def set_group(call):
-   await bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Ты в группе")
+   user = await db.add_group(
+      group_name=call.data
+   )
+   await call.answer(f"Ты в группе {call.data}", show_alert=True)
+   await call.message.edit_reply_markup()

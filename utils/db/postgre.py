@@ -19,8 +19,7 @@ class Database:
         )
 
     async def execute(self, command, *args, fetch: bool = False, fetchval: bool = False,
-                      fetchrow: bool = False,
-                      execute: bool = False):
+                      fetchrow: bool = False, execute: bool = False):
         async with self.pool.acquire() as connection:
             connection: Connection
             async with connection.transaction():
@@ -33,3 +32,33 @@ class Database:
                 elif execute:
                     result = await connection.execute(command, *args)
             return result
+
+    @staticmethod
+    def format_args(sql, parameters: dict):
+        sql += 'AND'.join([
+            f"{item} = ${num}" for num, item in enumerate(parameters.keys(), start=1)
+        ])
+
+        return sql, tuple(parameters.values())
+
+    async def create_table(self):
+        sql = """CREATE TABLE IF NOT EXISTS Ust(
+                    id SERIAL PRIMARY KEY ,
+                    fname VARCHAR(255) NOT NULL,
+                    id_tg BIGINT NOT NULL UNIQUE 
+                );"""
+        await self.execute(sql, execute=True)
+
+    async def add_user(self, fname,id_tg):
+        sql = """INSERT INTO users(fname, id_tg) VALUES ($1,$2)"""
+
+        return await self.execute(sql,fname,id_tg, fetchrow=True)
+
+    async def add_group(self, group_name):
+        sql = """INSERT INTO groupi(group_name) VALUES ($1)"""
+        return await self.execute(sql, group_name, fetchrow=True)
+
+    async def select_user(self, **kwargs):
+        sql = "SELECT * FROM Users WHERE "
+        sql, parameters = self.format_args(sql, parameters=kwargs)
+        return await self.execute(sql, *parameters, fetchrow=True)
