@@ -49,10 +49,10 @@ class Database:
                 );"""
         await self.execute(sql, execute=True)
 
-    async def add_user(self, fname,id_tg):
-        sql = """INSERT INTO users(fname, id_tg) VALUES ($1,$2)"""
+    async def add_user(self, fname, id_tg, groupus):
+        sql = """INSERT INTO users(fname, id_tg, groupus) VALUES ($1,$2,$3)"""
 
-        return await self.execute(sql,fname,id_tg, fetchrow=True)
+        return await self.execute(sql,fname,id_tg,groupus, fetchrow=True)
 
     async def add_group(self, group_name):
         sql = """INSERT INTO groupi(group_name) VALUES ($1)"""

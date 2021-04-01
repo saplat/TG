@@ -1,6 +1,6 @@
 from aiogram.dispatcher.filters import Text
 from keyboard.inlinegroup import group
-from loader import dp
+from loader import dp, db
 from aiogram import types
 
 
