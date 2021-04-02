@@ -59,6 +59,11 @@ class Database:
         return await self.execute(sql, group_name, fetchrow=True)
 
     async def select_user(self, **kwargs):
-        sql = "SELECT * FROM Users WHERE "
+        sql = "SELECT * FROM users WHERE "
+        sql, parameters = self.format_args(sql, parameters=kwargs)
+        return await self.execute(sql, *parameters, fetchrow=True)
+
+    async def check_teacher(self, **kwargs):
+        sql = "SELECT * FROM teachers WHERE"
         sql, parameters = self.format_args(sql, parameters=kwargs)
         return await self.execute(sql, *parameters, fetchrow=True)

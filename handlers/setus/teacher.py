@@ -1,4 +1,4 @@
-from loader import dp
+from loader import dp, db, bot
 from aiogram.dispatcher.filters import Text
 from aiogram import types
 
@@ -6,4 +6,13 @@ from aiogram import types
 async def student(message):
     a = types.ReplyKeyboardRemove()
     await message.answer('Привет джедай', reply_markup=a)
-    await message.answer('Укажи своё ФИ')
+    send = await message.answer('Укажи своё ФИ')
+
+
+    # @dp.message_handler()
+    # def set_teacher(message):
+    #     try:
+    #         #user = await db.check_teacher(fname = message.text)
+    #         #await message.answer('Hi')
+    #     except:
+    #         await message.answer('Ты не джедай. лох!')
