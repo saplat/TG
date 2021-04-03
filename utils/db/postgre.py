@@ -63,7 +63,6 @@ class Database:
         sql, parameters = self.format_args(sql, parameters=kwargs)
         return await self.execute(sql, *parameters, fetchrow=True)
 
-    async def check_teacher(self, **kwargs):
-        sql = "SELECT * FROM teachers WHERE fname ='g' "
-        sql, parameters = self.format_args(sql, parameters=kwargs)
-        return await self.execute(sql, *parameters, fetchrow=True)
+    async def check_teacher(self,tx):
+        sql = """SELECT EXISTS(SELECT 1 FROM teachers WHERE fname = tx)"""
+        return sql

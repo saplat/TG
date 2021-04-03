@@ -1,5 +1,17 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-menu_go = InlineKeyboardMarkup()
-step = InlineKeyboardButton("Перейти к меню", callback_data="step")
-menu_go.add(step)
+menuset = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Сегодня'), KeyboardButton(text='Завтра'),KeyboardButton(text='Неделя')
+        ],
+        [
+            KeyboardButton(text='Настройки')
+        ]
+    ],
+    resize_keyboard=True, one_time_keyboard = True
+)
+
+stepmenu = ReplyKeyboardMarkup(
+    keyboard=[[KeyboardButton(text="меню")]], resize_keyboard=True, one_time_keyboard=True
+)
