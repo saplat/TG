@@ -21,7 +21,7 @@ class ScheduleBuilder:
         elem_split_list = []
         for it in header_parse_list:
             elem_split_list.append(it)
-            if it[1] is StructParse.NumberClass
+            if it[1] is StructParse.NumberClass:
                 data_prepare_list.append(elem_split_list[:])
                 elem_split_list = []
 
