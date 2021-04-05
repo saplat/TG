@@ -32,5 +32,6 @@ class TimeParser:
                   count_day_rows = 1
               data = self.worksheet.cell(row=it, column=info_parse[0].value)
               result[current_day].append(data)
+              count_day_rows += 1
           self.__CACHE[info_parse] = result
           return result
