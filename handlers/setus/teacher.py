@@ -3,6 +3,8 @@ import asyncpg
 from aiogram.dispatcher.filters import Text
 from aiogram import types
 from states import Teacher_data
+from keyboard.gomenu import menu
+
 
 @dp.message_handler(Text('Преподаватель'))
 async def teacher(message):
@@ -20,6 +22,8 @@ async def get_teacher(message, state):
     await message.answer(f"Привет {answer}")
     user = await db.check_teacher(answer)
     await state.finish()
+    await message.answer("Меню", reply_markup=menu)
+
 
 
 

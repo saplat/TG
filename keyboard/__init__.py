@@ -1,2 +1,2 @@
 from .select import select
-from .gomenu import menuset
+from .gomenu import menu

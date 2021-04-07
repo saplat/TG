@@ -1,17 +1,18 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.utils.callback_data import CallbackData
 
-menuset = ReplyKeyboardMarkup(
-    keyboard=[
+#set_callbackk = CallbackData("item_name")
+menu = InlineKeyboardMarkup(inline_keyboard=[
         [
-            KeyboardButton(text='Сегодня'), KeyboardButton(text='Завтра'),KeyboardButton(text='Неделя')
+            InlineKeyboardButton(text="Неделя", callback_data= "week"),
+            InlineKeyboardButton(text="Сегодня", callback_data= "today"),
+            InlineKeyboardButton(text="Завтра", callback_data= "tomorrow")
         ],
         [
-            KeyboardButton(text='Настройки')
+            InlineKeyboardButton(text="Настройка", callback_data= "setting")
         ]
-    ],
-    resize_keyboard=True, one_time_keyboard = True
-)
-
-stepmenu = ReplyKeyboardMarkup(
-    keyboard=[[KeyboardButton(text="меню")]], resize_keyboard=True, one_time_keyboard=True
-)
+    ])
+# today = InlineKeyboardButton(text="Сегодня", callback_data=set_callbackk.new(item_name = "week"))
+# tomorrow = InlineKeyboardButton(text="Завтра", callback_data=set_callbackk.new(item_name = "week"))
+# setting = InlineKeyboardButton(text="Настройик", callback_data=set_callbackk.new(item_name = "week"))
+# menu.add(week,today,tomorrow,setting)
