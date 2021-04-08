@@ -2,7 +2,7 @@ import asyncpg
 from aiogram import types
 from aiogram.dispatcher.filters import Text
 
-from keyboard import pasget
+from keyboard import pasget, helpback
 from loader import dp,bot,db
 from keyboard.gomenu import menu, sett
 
@@ -33,7 +33,9 @@ async def set_group(call):
    elif call.data == "back":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      await call.message.answer("меню", reply_markup=menu)
+      await call.message.answer(f"{call.from_user.full_name}, здесь ты можешь получить расписание на сегодня, завтра и неделю.\n"
+                                f"Для подписки на рассылку рассписания и сброса группы перейди в настройки\n"
+                                f"Там еще помощь есть\n", reply_markup = menu)
 
    elif call.data == 'pass':
         await call.message.edit_reply_markup()
@@ -42,12 +44,17 @@ async def set_group(call):
    elif call.data == "back2":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      await call.message.answer("настройки", reply_markup=sett)
+      await call.message.answer(f"настройки", reply_markup=sett)
    elif call.data == "drop":
       await db.delete_users()
       await call.message.edit_reply_markup()
       await call.message.delete()
       await call.message.answer("Мем смешной, а пацанчик-то реально умер...", reply_markup=sett)
+
+   elif call.data == 'help':
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer(f"{call.from_user.full_name}, ну ты серьезно???\nТут всего 4 кнопки", reply_markup =helpback)
 
    else:
       try:
@@ -62,7 +69,9 @@ async def set_group(call):
       await call.answer(f"Ты в группе {call.data}", show_alert=True)
       await call.message.edit_reply_markup()
       await call.message.delete()
-      await call.message.answer("Меню", reply_markup = menu)
+      await call.message.answer(f"{call.from_user.full_name}, здесь ты можешь получить расписание на сегодня, завтра и неделю\n"
+                                f"Для подписки на рассылку рассписания и сброса группы перейди в настройки\n"
+                                f"Там еще помощь есть\n", reply_markup = menu)
 
 
    # await call.message.answer("Перейти в меню",reply_markup = stepmenu)

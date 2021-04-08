@@ -63,9 +63,8 @@ class Database:
         sql, parameters = self.format_args(sql, parameters=kwargs)
         return await self.execute(sql, *parameters, fetchrow=True)
 
-    async def check_teacher(self,tx):
-        sql = """SELECT EXISTS(SELECT 1 FROM teachers WHERE fname = tx)"""
-        return sql
+    async def check_teacher(self):
+        await self.execute("SELECT * FROM teachers(fname) WHERE TREUE", execute=True)
 
     async def delete_users(self):
         await self.execute("DELETE FROM users WHERE TRUE", execute=True)
