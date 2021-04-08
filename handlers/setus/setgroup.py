@@ -43,6 +43,11 @@ async def set_group(call):
       await call.message.edit_reply_markup()
       await call.message.delete()
       await call.message.answer("настройки", reply_markup=sett)
+   elif call.data == "drop":
+      await db.delete_users()
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer("Мем смешной, а пацанчик-то реально умер...", reply_markup=sett)
 
    else:
       try:

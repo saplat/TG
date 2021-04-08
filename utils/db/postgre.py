@@ -66,3 +66,6 @@ class Database:
     async def check_teacher(self,tx):
         sql = """SELECT EXISTS(SELECT 1 FROM teachers WHERE fname = tx)"""
         return sql
+
+    async def delete_users(self):
+        await self.execute("DELETE FROM users WHERE TRUE", execute=True)
