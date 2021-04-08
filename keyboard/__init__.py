@@ -1,2 +1,3 @@
 from .select import select
-from .gomenu import menu
+from .gomenu import menu, sett
+from .pasinline import pasget

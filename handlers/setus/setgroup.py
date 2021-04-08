@@ -1,8 +1,10 @@
 import asyncpg
 from aiogram import types
 from aiogram.dispatcher.filters import Text
+
+from keyboard import pasget
 from loader import dp,bot,db
-from keyboard.gomenu import menu
+from keyboard.gomenu import menu, sett
 
 
 @dp.callback_query_handler()
@@ -26,7 +28,21 @@ async def set_group(call):
    elif call.data == "setting":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      await call.message.answer("настройки", reply_markup=menu)
+      await call.message.answer("настройки", reply_markup=sett)
+
+   elif call.data == "back":
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer("меню", reply_markup=menu)
+
+   elif call.data == 'pass':
+        await call.message.edit_reply_markup()
+        await call.message.delete()
+        await call.message.answer("Выбери время для подписки", reply_markup=pasget)
+   elif call.data == "back2":
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer("настройки", reply_markup=sett)
 
    else:
       try:
