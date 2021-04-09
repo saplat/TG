@@ -18,8 +18,11 @@ class Database:
             database=config.DB_NAME
         )
 
-    async def execute(self, command, *args, fetch: bool = False, fetchval: bool = False,
-                      fetchrow: bool = False, execute: bool = False):
+    async def execute(self, command, *args,
+                      fetch: bool = False,
+                      fetchval: bool = False,
+                      fetchrow: bool = False,
+                      execute: bool = False):
         async with self.pool.acquire() as connection:
             connection: Connection
             async with connection.transaction():
@@ -41,30 +44,15 @@ class Database:
 
         return sql, tuple(parameters.values())
 
-    async def create_table(self):
-        sql = """CREATE TABLE IF NOT EXISTS Ust(
-                    id SERIAL PRIMARY KEY ,
-                    fname VARCHAR(255) NOT NULL,
-                    id_tg BIGINT NOT NULL UNIQUE 
-                );"""
-        await self.execute(sql, execute=True)
-
     async def add_user(self, fname, id_tg, groupus):
         sql = """INSERT INTO users(fname, id_tg, groupus) VALUES ($1,$2,$3)"""
 
         return await self.execute(sql,fname,id_tg,groupus, fetchrow=True)
 
-    async def add_group(self, group_name):
-        sql = """INSERT INTO groupi(group_name) VALUES ($1)"""
-        return await self.execute(sql, group_name, fetchrow=True)
+    async def check_teacher(self,fname):
+        sql = """SELECT * FROM teachers WHERE fname = ($1)"""
+        return await self.execute(sql,fname, execute=True)
 
-    async def select_user(self, **kwargs):
-        sql = "SELECT * FROM users WHERE "
-        sql, parameters = self.format_args(sql, parameters=kwargs)
-        return await self.execute(sql, *parameters, fetchrow=True)
-
-    async def check_teacher(self):
-        await self.execute("SELECT * FROM teachers(fname) WHERE TREUE", execute=True)
-
-    async def delete_users(self):
-        await self.execute("DELETE FROM users WHERE TRUE", execute=True)
+    async def delete_users(self,id_tg):
+        sql = """DELETE FROM users WHERE id_tg = ($1) """
+        await self.execute(sql, id_tg, execute=True)

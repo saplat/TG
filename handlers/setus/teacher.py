@@ -19,10 +19,17 @@ async def teacher(message):
 async def get_teacher(message, state):
     answer = message.text
     await state.update_data(answe = answer)
-    await message.answer(f"Привет {answer}")
-    user = await db.check_teacher(answer)
-    await state.finish()
-    await message.answer("Меню", reply_markup=menu)
+    try:
+        user = await db.check_teacher(str(answer))
+        if user == 'SELECT 1':
+            await message.answer(f"Привет {answer}")
+            await state.finish()
+            await message.answer("Меню", reply_markup=menu)
+        else:
+            await message.answer('лох')
+    except:
+        await message.answer(f"ЛОХ")
+
 
 
 

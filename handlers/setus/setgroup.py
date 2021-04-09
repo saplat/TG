@@ -46,7 +46,7 @@ async def set_group(call):
       await call.message.delete()
       await call.message.answer(f"настройки", reply_markup=sett)
    elif call.data == "drop":
-      await db.delete_users()
+      await db.delete_users(call.from_user.id)
       await call.message.edit_reply_markup()
       await call.message.delete()
       await call.message.answer("Мем смешной, а пацанчик-то реально умер...", reply_markup=sett)
@@ -73,9 +73,6 @@ async def set_group(call):
                                 f"Для подписки на рассылку рассписания и сброса группы перейди в настройки\n"
                                 f"Там еще помощь есть\n", reply_markup = menu)
 
-
-   # await call.message.answer("Перейти в меню",reply_markup = stepmenu)
-   # await Menu.swapmenu.set()
 
 
 
