@@ -13,23 +13,30 @@ day = datetime.datetime.today().weekday()
 
 @dp.callback_query_handler()
 async def set_group(call):
+   gr = await db.select_group(call.from_user.id)
 
    if call.data == "week":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      await call.message.answer(text='Неделя ебать',reply_markup = menu)
+
+      for i in range(0,6):
+         us = await (db.select_shedules(gr, i))
+         await call.message.answer(us)
+
+      us1 = await (db.select_shedules(gr, 6))
+      await call.message.answer(us1,reply_markup = menu)
 
    elif call.data == "today":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      gr = await db.select_group(call.from_user.id)
       us = await (db.select_shedules(gr,day))
       await call.message.answer(us, reply_markup=menu)
 
    elif call.data == "tomorrow":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      await call.message.answer("завтра", reply_markup=menu)
+      us = await (db.select_shedules(gr, day+1))
+      await call.message.answer(us, reply_markup=menu)
 
    elif call.data == "setting":
       await call.message.edit_reply_markup()
@@ -95,7 +102,3 @@ async def set_group(call):
       await call.message.answer(f"{call.from_user.full_name}, здесь ты можешь получить расписание на сегодня, завтра и неделю\n"
                                 f"Для подписки на рассылку рассписания и сброса группы перейди в настройки\n"
                                 f"Там еще помощь есть\n", reply_markup = menu)
-
-
-
-
