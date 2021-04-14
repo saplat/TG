@@ -26,7 +26,7 @@ async def get_teacher(message, state):
             await state.finish()
             await message.answer("Меню", reply_markup=menu)
         else:
-            await message.answer('лох')
+            await message.answer('чел ты...')
     except:
         await message.answer(f"ЛОХ")
 

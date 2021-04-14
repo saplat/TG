@@ -1,10 +1,14 @@
+import asyncio
 import asyncpg
 from aiogram import types
 from aiogram.dispatcher.filters import Text
-
 from keyboard import pasget, helpback
 from loader import dp,bot,db
 from keyboard.gomenu import menu, sett
+import datetime
+
+loop = asyncio.get_event_loop()
+day = datetime.datetime.today().weekday()
 
 
 @dp.callback_query_handler()
@@ -18,7 +22,9 @@ async def set_group(call):
    elif call.data == "today":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      await call.message.answer("сегодня", reply_markup=menu)
+      gr = await db.select_group(call.from_user.id)
+      us = await (db.select_shedules(gr,day))
+      await call.message.answer(us, reply_markup=menu)
 
    elif call.data == "tomorrow":
       await call.message.edit_reply_markup()
@@ -41,20 +47,37 @@ async def set_group(call):
         await call.message.edit_reply_markup()
         await call.message.delete()
         await call.message.answer("Выбери время для подписки", reply_markup=pasget)
+
    elif call.data == "back2":
       await call.message.edit_reply_markup()
       await call.message.delete()
       await call.message.answer(f"настройки", reply_markup=sett)
+
    elif call.data == "drop":
-      await db.delete_users(call.from_user.id)
-      await call.message.edit_reply_markup()
-      await call.message.delete()
-      await call.message.answer("Мем смешной, а пацанчик-то реально умер...", reply_markup=sett)
+      try:
+         await db.delete_users(call.from_user.id)
+         await call.message.edit_reply_markup()
+         await call.message.delete()
+         await call.message.answer("Мем смешной, а пацанчик-то реально умер...", reply_markup=sett)
+      except:
+         await call.message.answer("дурак")
 
    elif call.data == 'help':
       await call.message.edit_reply_markup()
       await call.message.delete()
       await call.message.answer(f"{call.from_user.full_name}, ну ты серьезно???\nТут всего 4 кнопки", reply_markup =helpback)
+
+   elif call.data == "8":
+      delay = 10
+      async def overpas():
+         await call.message.answer('сегодня', reply_markup = menu)
+         when_to_call = loop.time() + delay
+         loop.call_at(when_to_call, my_callback)
+
+      def my_callback():
+         asyncio.ensure_future(overpas())
+
+      my_callback()
 
    else:
       try:
