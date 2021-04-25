@@ -9,8 +9,8 @@ from keyboard.gomenu import menu
 @dp.message_handler(Text('Преподаватель'))
 async def teacher(message):
     a = types.ReplyKeyboardRemove()
-    await message.answer('Привет джедай', reply_markup=a)
-    await message.answer('Укажи своё ФИ')
+    await message.answer('Джедай.', reply_markup=a)
+    await message.answer('Укажи свою Фамилию и Имя.')
 
     await Teacher_data.naming.set()
 

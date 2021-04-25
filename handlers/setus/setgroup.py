@@ -8,6 +8,7 @@ from keyboard.gomenu import menu, sett
 import datetime
 
 loop = asyncio.get_event_loop()
+global day
 day = datetime.datetime.today().weekday()
 
 
@@ -35,7 +36,11 @@ async def set_group(call):
    elif call.data == "tomorrow":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      us = await (db.select_shedules(gr, day+1))
+      try:
+         us = await (db.select_shedules(gr, day+1))
+      except:
+         us = await (db.select_shedules(gr, 0))
+
       await call.message.answer(us, reply_markup=menu)
 
    elif call.data == "setting":
@@ -75,16 +80,14 @@ async def set_group(call):
       await call.message.answer(f"{call.from_user.full_name}, ну ты серьезно???\nТут всего 4 кнопки", reply_markup =helpback)
 
    elif call.data == "8":
-      delay = 10
-      async def overpas():
-         await call.message.answer('сегодня', reply_markup = menu)
-         when_to_call = loop.time() + delay
-         loop.call_at(when_to_call, my_callback)
 
-      def my_callback():
-         asyncio.ensure_future(overpas())
-
-      my_callback()
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      try:
+         user = await db.add_pas(call.from_user.id)
+         await call.message.answer("Ты подписался.", reply_markup=menu)
+      except:
+         await call.message.answer("Ты уже подписался.", reply_markup=menu)
 
    else:
       try:
