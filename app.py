@@ -16,10 +16,9 @@ async def noon_print():
     s = await db.count_userspas()
     f = await db.select_pas()
     for i in range(s):
-        newstr = str(f[i]).replace("<Record id_tg=", "")
-        newstr1 = newstr.replace(">", "")
+        newstr = str(f[i]).replace("<Record id_tg=", "").replace(">", "")
         us = await (db.select_shedules('1MDA7', day))
-        await bot.send_message(newstr1, us)
+        await bot.send_message(newstr, us)
 
 async def scheduler():
     aioschedule.every().day.at("00:07").do(noon_print)

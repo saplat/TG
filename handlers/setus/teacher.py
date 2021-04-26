@@ -3,8 +3,7 @@ import asyncpg
 from aiogram.dispatcher.filters import Text
 from aiogram import types
 from states import Teacher_data
-from keyboard.gomenu import menu
-
+from keyboard import menuth
 
 @dp.message_handler(Text('Преподаватель'))
 async def teacher(message):
@@ -24,7 +23,7 @@ async def get_teacher(message, state):
         if user == 'SELECT 1':
             await message.answer(f"Привет {answer}")
             await state.finish()
-            await message.answer("Меню", reply_markup=menu)
+            await message.answer("Меню", reply_markup=menuth)
         else:
             await message.answer('чел ты...')
     except:

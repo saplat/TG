@@ -61,9 +61,9 @@ class Database:
         sql = """DELETE FROM users WHERE id_tg = ($1) """
         await self.execute(sql, id_tg, execute=True)
 
-    async def select_shedules(self, group_user, dayi):
-        sql = """SELECT schedule FROM schedules WHERE (group_user = ($1) AND dayi = ($2));"""
-        return await self.execute(sql, group_user, dayi,fetchval=True)
+    async def select_shedules(self, group_user, dayi, updown):
+        sql = """SELECT schedule FROM schedules WHERE (group_user = ($1) AND dayi = ($2) AND updown = ($3));"""
+        return await self.execute(sql, group_user, dayi,updown,fetchval=True)
 
     async def select_group(self,id_tg):
         sql = """SELECT groupus FROM users WHERE (id_tg = ($1))"""

@@ -5,6 +5,7 @@ from aiogram.dispatcher.filters import Text
 from keyboard import pasget, helpback
 from loader import dp,bot,db
 from keyboard.gomenu import menu, sett
+from keyboard import menuth, settth, helpbackth
 import datetime
 
 loop = asyncio.get_event_loop()
@@ -21,16 +22,16 @@ async def set_group(call):
       await call.message.delete()
 
       for i in range(0,6):
-         us = await (db.select_shedules(gr, i))
+         us = await (db.select_shedules(gr, i,0))
          await call.message.answer(us)
 
-      us1 = await (db.select_shedules(gr, 6))
+      us1 = await (db.select_shedules(gr, 6,0))
       await call.message.answer(us1,reply_markup = menu)
 
    elif call.data == "today":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      us = await (db.select_shedules(gr,day))
+      us = await (db.select_shedules(gr,day, 0))
       await call.message.answer(us, reply_markup=menu)
 
    elif call.data == "tomorrow":
@@ -40,6 +41,7 @@ async def set_group(call):
          us = await (db.select_shedules(gr, day+1))
       except:
          us = await (db.select_shedules(gr, 0))
+
 
       await call.message.answer(us, reply_markup=menu)
 
@@ -88,6 +90,40 @@ async def set_group(call):
          await call.message.answer("Ты подписался.", reply_markup=menu)
       except:
          await call.message.answer("Ты уже подписался.", reply_markup=menu)
+
+   elif call.data == 'todayth':
+      await call.message.answer(datatime)
+
+   elif call.data == 'tomorrowth':
+      await call.message.answer('завтра')
+   elif call.data == 'weekth':
+      await call.message.answer('неделя')
+
+   elif call.data == 'settingth':
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer("настройки", reply_markup=settth)
+
+   elif call.data == "backth":
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer(f"{call.from_user.full_name}, Fздесь ты можешь получить расписание на сегодня, завтра и неделю.\n"
+                                f"Для подписки на рассылку рассписания и сброса группы перейди в настройки\n"
+                                f"Там еще помощь есть\n", reply_markup = menuth)
+   elif call.data == "helpth":
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer(f"{call.from_user.full_name}, Fну ты серьезно???\nТут всего 4 кнопки",
+                                reply_markup=helpbackth)
+   elif call.data == "back2th":
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer(f"настройки", reply_markup=settth)
+
+   elif call.data == "passth":
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      await call.message.answer(f"скоро здесь что-то будет", reply_markup=menuth)
 
    else:
       try:
