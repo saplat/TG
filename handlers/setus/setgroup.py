@@ -1,3 +1,4 @@
+from handlers.setus.teacher import list
 import asyncio
 import asyncpg
 from aiogram import types
@@ -22,9 +23,9 @@ elif datetime.datetime.now().isocalendar()[1] in dayup:
    dayend = 1
 
 
-
 @dp.callback_query_handler()
 async def set_group(call):
+   global list
    gr = await db.select_group(call.from_user.id)
 
    if call.data == "week":
@@ -103,12 +104,35 @@ async def set_group(call):
          await call.message.answer("Ты уже подписался.", reply_markup=menu)
 
    elif call.data == 'todayth':
-      await call.message.answer('datatime')
+      await call.message.answer('сегодня')
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      fname = list[0]
+      us = await (db.select_shedules_th(fname, day, dayend))
+      await call.message.answer(us, reply_markup=menuth)
 
    elif call.data == 'tomorrowth':
       await call.message.answer('завтра')
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      fname = list[0]
+      try:
+         us = await (db.select_shedules_th(fname, day+1, dayend))
+         await call.message.answer(us, reply_markup=menuth)
+      except:
+         us = await (db.select_shedules_th(fname, 0, dayend))
+         await call.message.answer(us, reply_markup=menuth)
+
    elif call.data == 'weekth':
       await call.message.answer('неделя')
+      await call.message.edit_reply_markup()
+      await call.message.delete()
+      fname = list[0]
+      for i in range(5):
+         us = await (db.select_shedules_th(fname,i,dayend))
+         await call.message.answer(us)
+      us = await (db.select_shedules_th(fname, 5, dayend))
+      await call.message.answer(us, reply_markup=menuth)
 
    elif call.data == 'settingth':
       await call.message.edit_reply_markup()

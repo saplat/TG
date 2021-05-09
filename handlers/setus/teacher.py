@@ -13,14 +13,16 @@ async def teacher(message):
 
     await Teacher_data.naming.set()
 
-
+list = []
 @dp.message_handler(state=Teacher_data.naming)
 async def get_teacher(message, state):
     answer = message.text
+    global list
+    list.append(answer)
     await state.update_data(answe = answer)
     try:
         user = await db.check_teacher(str(answer))
-        if user == 'SELECT 1':
+        if user != 'SELECT 0':
             await message.answer(f"Привет {answer}")
             await state.finish()
             await message.answer("Меню", reply_markup=menuth)
@@ -28,8 +30,6 @@ async def get_teacher(message, state):
             await message.answer('чел ты...')
     except:
         await message.answer(f"ЛОХ")
-
-
 
 
 

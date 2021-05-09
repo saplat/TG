@@ -76,3 +76,8 @@ class Database:
     async def count_userspas(self):
         sql = "SELECT COUNT(*) FROM pasusers"
         return await self.execute(sql, fetchval=True)
+
+    async def select_shedules_th(self, fname, dayi, updown):
+        sql = """SELECT schedule FROM teachers WHERE (fname = ($1) AND dayi = ($2) AND updown = ($3))"""
+        return await self.execute(sql, fname, dayi, updown, fetchval=True)
+

@@ -11,7 +11,6 @@ import datetime
 day = datetime.datetime.today().weekday()
 
 
-
     # f = await db.select_pas()
     # for i in range(len(f)):
     #     newstr = str(f[i]).replace("<Record id_tg=", "").replace(">", "")
