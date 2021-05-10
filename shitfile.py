@@ -12,6 +12,6 @@ async def sending_7am():
         await bot.send_message(newstr, us)
 schedul = Scheduler()
 
-schedul.add_job(DatetimesJob(sending_7am, interval="daily", when="12:05:00 am"))
+schedul.add_job(DatetimesJob(sending_7am, interval="daily", when="7:17:00 am"))
 
-await schedul.start()
+schedul.start()
