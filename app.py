@@ -17,6 +17,4 @@ day = datetime.datetime.today().weekday()
     #     us = await (db.select_shedules('1MDA7', day))
     #     await bot.send_message(newstr, us)
 
-
-
 executor.start_polling(dp, skip_updates=False)
