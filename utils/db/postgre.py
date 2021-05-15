@@ -8,7 +8,7 @@ from data import config
 
 class Database:
     def __init__(self):
-        self.pool: Union[Pool, None] = None
+        self.pool: Pool = Pool
 
     async def create(self):
         self.pool = await asyncpg.create_pool(
