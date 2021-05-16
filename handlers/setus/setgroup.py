@@ -13,8 +13,8 @@ import datetime
 loop = asyncio.get_event_loop()
 
 
-daydown = [i for i in range(1,24,2)]
-dayup = [i for i in range(2,24,2)]
+daydown = [i for i in range(1,30,2)]
+dayup = [i for i in range(2,30,2)]
 global dayend
 if datetime.datetime.now().isocalendar()[1] in daydown:
    dayend = 0
