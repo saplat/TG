@@ -53,11 +53,13 @@ async def set_group(call):
       await call.message.delete()
       if day !=6:
          us = await (db.select_shedules(gr, day+1,dayend))
-         await call.message.answer(us, reply_markup=menu)
-
       else:
+         if dayend == 1:
+            dayend = 0
+         else:
+            dayend = 1
          us = await (db.select_shedules(gr, 0,dayend))
-         await call.message.answer(us, reply_markup=menu)
+      await call.message.answer(us, reply_markup=menu)
 
 
 
