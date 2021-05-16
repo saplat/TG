@@ -51,10 +51,11 @@ async def set_group(call):
    elif call.data == "tomorrow":
       await call.message.edit_reply_markup()
       await call.message.delete()
-      if day != 6:
+      try:
          us = await (db.select_shedules(gr, day+1,dayend))
-      else:
+      except:
          us = await (db.select_shedules(gr, 0,dayend))
+
 
       await call.message.answer(us, reply_markup=menu)
 
