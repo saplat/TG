@@ -11,8 +11,7 @@ import states
 import datetime
 
 loop = asyncio.get_event_loop()
-global day
-day = datetime.datetime.today().weekday()
+
 
 daydown = [i for i in range(1,24,2)]
 dayup = [i for i in range(2,24,2)]
@@ -25,6 +24,8 @@ elif datetime.datetime.now().isocalendar()[1] in dayup:
 
 @dp.callback_query_handler()
 async def set_group(call):
+   global day
+   day = datetime.datetime.today().weekday()
    global list
    gr = await db.select_group(call.from_user.id)
 
