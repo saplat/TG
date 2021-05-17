@@ -22,20 +22,19 @@ async def get_teacher(message, state):
     global list
     list.append(answer)
     await state.update_data(answe = answer)
+    user = await db.check_teacher(str(answer))
+
     if answer == '/start':
-        await state.finish()
         await message.answer(f'Привет {message.from_user.full_name}.\n'
                              f'Укажи свой статус.', reply_markup=select)
-    try:
-        user = await db.check_teacher(str(answer))
-        if user != 'SELECT 0':
-            await message.answer(f"Привет {answer}")
-            await state.finish()
-            await message.answer("Меню", reply_markup=menuth)
-        else:
-            await message.answer('чел ты...')
-    except:
-        await message.answer(f"ЛОХ")
+        await state.finish()
+
+    elif user != 'SELECT 0':
+        await message.answer(f"Привет {answer}")
+        await state.finish()
+        await message.answer("Меню", reply_markup=menuth)
+    else:
+        await message.answer('Данный преподавтель не найден в базе данных')
 
 
 
