@@ -4,6 +4,8 @@ from aiogram.dispatcher.filters import Text
 from aiogram import types
 from states import Teacher_data
 from keyboard import menuth
+from keyboard import select
+
 
 @dp.message_handler(Text('Преподаватель'))
 async def teacher(message):
@@ -20,6 +22,10 @@ async def get_teacher(message, state):
     global list
     list.append(answer)
     await state.update_data(answe = answer)
+    if answer == '/start':
+        await state.finish()
+        await message.answer(f'Привет {message.from_user.full_name}.\n'
+                             f'Укажи свой статус.', reply_markup=select)
     try:
         user = await db.check_teacher(str(answer))
         if user != 'SELECT 0':
