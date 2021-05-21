@@ -19,6 +19,7 @@ list = []
 @dp.message_handler(state=Teacher_data.naming)
 async def get_teacher(message, state):
     answer = message.text
+    answer.lower()
     global list
     list.append(answer)
     await state.update_data(answe = answer)

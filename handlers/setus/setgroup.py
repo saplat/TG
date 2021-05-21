@@ -111,7 +111,6 @@ async def set_group(call):
          await call.message.answer("Ты уже подписался.", reply_markup=menu)
 
    elif call.data == 'todayth':
-      await call.message.answer('сегодня')
       await call.message.edit_reply_markup()
       await call.message.delete()
       fname = list[0]
