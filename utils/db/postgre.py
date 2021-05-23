@@ -81,3 +81,7 @@ class Database:
         sql = """SELECT schedule FROM teachers WHERE (fname = ($1) AND dayi = ($2) AND updown = ($3))"""
         return await self.execute(sql, fname, dayi, updown, fetchval=True)
 
+    async def check_student(self, id_tg):
+        sql = """SELECT * FROM users WHERE id_tg = ($1)"""
+        return await self.execute(sql, id_tg, execute=True)
+

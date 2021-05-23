@@ -11,3 +11,4 @@ async def start(message):
     await db.create()
     await message.answer(f'Привет {message.from_user.full_name}.\n'
                          f'Укажи свой статус.', reply_markup=select)
+
